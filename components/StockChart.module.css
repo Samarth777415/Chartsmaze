@@ -1,0 +1,198 @@
+.container {
+  background-color: white;
+  color: black;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.priceContainer {
+  display: flex;
+  align-items: center;
+  margin-top: 0.25rem;
+}
+
+.currentPrice {
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+.performance {
+  margin-left: 0.75rem;
+  display: flex;
+  align-items: center;
+}
+
+.positive {
+  color: #10B981;
+}
+
+.negative {
+  color: #EF4444;
+}
+
+.timeframeButtons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.button {
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.25rem;
+  border: none;
+  background-color: #E5E7EB;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.activeButton {
+  background-color: #2563EB;
+  color: white;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.statsCard {
+  background-color: #F3F4F6;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+.statsLabel {
+  font-size: 0.875rem;
+  color: #6B7280;
+  margin: 0 0 0.25rem 0;
+}
+
+.statsValue {
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.chartContainer {
+  height: 300px;
+  margin-bottom: 1.5rem;
+}
+
+.insightsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.insightCard {
+  background-color: #F3F4F6;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+.insightTitle {
+  font-size: 1.125rem;
+  font-weight: 500;
+  margin: 0 0 0.5rem 0;
+}
+
+.insightData {
+  display: flex;
+  align-items: center;
+}
+
+.trendIcon {
+  margin-right: 0.5rem;
+  font-size: 1.25rem;
+}
+
+.trendValue {
+  font-size: 1.25rem;
+}
+
+.insightSubtext {
+  font-size: 0.875rem;
+  color: #6B7280;
+  margin: 0.25rem 0 0 0;
+}
+
+.tooltip {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border: 1px solid #E5E7EB;
+}
+
+.tooltipTitle {
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+}
+
+.tooltipData {
+  color: #6B7280;
+  margin: 0.25rem 0;
+}
+
+/* Responsive styling */
+@media (max-width: 1024px) {
+  .container {
+    padding: 1rem;
+  }
+  
+  .chartContainer {
+    height: 250px;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .timeframeButtons {
+    margin-top: 1rem;
+  }
+  
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .insightsGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .chartContainer {
+    height: 200px;
+  }
+  
+  .currentPrice {
+    font-size: 1.5rem;
+  }
+}
