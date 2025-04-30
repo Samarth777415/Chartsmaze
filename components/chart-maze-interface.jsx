@@ -1,40 +1,61 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { ChevronDown, Menu, BarChart2, X, Search } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import Sidebar from "./sidebar"
-import StockChart from "./stock-chart"
-import SummaryView from "./summary-view"
-import "./ChartMazeInterface.css"
+import { useState } from "react";
+import { ChevronDown, Menu, BarChart2, X, Search } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import Sidebar from "./sidebar";
+import StockChart from "./stock-chart";
+import SummaryView from "./summary-view";
+import "./ChartMazeInterface.css";
 
 export default function ChartMazeInterface() {
-  const [dateRange, setDateRange] = useState("26/04/2025 - 26/04/2025")
-  const [initialCapital, setInitialCapital] = useState("9")
-  const [activeTab, setActiveTab] = useState("trades") // State to track active tab
-  const [sidebarVisible, setSidebarVisible] = useState(true) // State to track sidebar visibility
+  const [dateRange, setDateRange] = useState("26/04/2025 - 26/04/2025");
+  const [initialCapital, setInitialCapital] = useState("9");
+  const [activeTab, setActiveTab] = useState("trades"); // State to track active tab
+  const [sidebarVisible, setSidebarVisible] = useState(true); // State to track sidebar visibility
+  const [isOpen, setIsOpen] = useState(false);
+  const [selected, setSelected] = useState("Date (Newest First)");
+  const [isOpen1, setIsOpen1] = useState(false);
+  const [selectedSymbol, setSelectedSymbol] = useState("ADSA");
+  const symbols = ["ADSA", "BDTC", "CXYZ"];
+
+  const options = [
+    "Date (Newest First)",
+    "Date (Oldest First)",
+    "Price (Low to High)",
+    "Price (High to Low)",
+  ];
 
   // Toggle between trades and summary views
   const toggleView = (tab) => {
-    setActiveTab(tab)
-  }
+    setActiveTab(tab);
+  };
 
   // Toggle sidebar visibility
   const toggleSidebar = () => {
-    setSidebarVisible(!sidebarVisible)
-  }
+    setSidebarVisible(!sidebarVisible);
+  };
 
   return (
     <div className="chart-maze-container">
       {/* Conditionally render sidebar based on visibility state */}
-      <div className={`sidebar-container ${sidebarVisible ? "sidebar-visible" : "sidebar-hidden"}`}>
+      <div
+        className={`sidebar-container ${sidebarVisible ? "sidebar-visible" : "sidebar-hidden"}`}
+      >
         <Sidebar />
       </div>
 
-      <div className={`main-content ${sidebarVisible ? "" : "main-content-expanded"}`}>
+      <div
+        className={`main-content ${sidebarVisible ? "" : "main-content-expanded"}`}
+      >
         <header className="top-nav">
-          <Button variant="ghost" size="icon" className="menu-button" onClick={toggleSidebar}>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="menu-button"
+            onClick={toggleSidebar}
+          >
             <Menu className="h-5 w-5" />
           </Button>
         </header>
@@ -42,11 +63,16 @@ export default function ChartMazeInterface() {
         {/* Main Content Area */}
         <div className="content-area">
           {/* Trades/Summary Toggle */}
-          <div className="toggleContainer" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            {/* Empty div to help with centering */}
+          <div
+            className="toggleContainer"
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
             <div style={{ width: "200px" }}></div>
-            
-            {/* Centered toggle wrapper */}
+
             <div className="toggleWrapper" style={{ margin: "0 auto" }}>
               <button
                 className={`toggleButton ${activeTab === "trades" ? "toggleActive" : ""}`}
@@ -64,12 +90,20 @@ export default function ChartMazeInterface() {
               </button>
               <div
                 className="toggleIndicator"
-                style={{ transform: activeTab === "summary" ? "translateX(100%)" : "translateX(0)" }}
+                style={{
+                  transform:
+                    activeTab === "summary"
+                      ? "translateX(100%)"
+                      : "translateX(0)",
+                }}
               />
             </div>
-            
+
             {/* Load container on the right */}
-            <div className="load-container" style={{ marginRight: '0', width: "200px" }}>
+            <div
+              className="load-container"
+              style={{ marginRight: "0", width: "200px" }}
+            >
               <span className="load-label">Load:</span>
               <div className="symbol-selector">
                 <span>ADSA</span>
@@ -80,7 +114,6 @@ export default function ChartMazeInterface() {
               </button>
             </div>
           </div>
-          
 
           {/* Conditionally render content based on active tab */}
           {activeTab === "trades" ? (
@@ -91,7 +124,11 @@ export default function ChartMazeInterface() {
                 <div className="filter-group">
                   <span className="filter-label">Sell Dates</span>
                   <div className="input-with-icon">
-                    <Input value={dateRange} onChange={(e) => setDateRange(e.target.value)} className="date-input" />
+                    <Input
+                      value={dateRange}
+                      onChange={(e) => setDateRange(e.target.value)}
+                      className="date-input"
+                    />
                     <X className="clear-icon" />
                   </div>
                 </div>
@@ -110,17 +147,42 @@ export default function ChartMazeInterface() {
                   </div>
                 </div>
 
-                <div className="filter-group">
+                <div className="filter-group relative">
                   <span className="filter-label">Sort:</span>
-                  <div className="sort-dropdown">
-                    <span className="dropdown-text">Date (Newest First)</span>
+
+                  <div
+                    className="sort-dropdown"
+                    onClick={() => setIsOpen(!isOpen)}
+                  >
+                    <span className="dropdown-text">{selected}</span>
                     <ChevronDown className="dropdown-icon" />
                   </div>
+
+                  {isOpen && (
+                    <div className="dropdown-menu">
+                      {options.map((option) => (
+                        <div
+                          key={option}
+                          className={`dropdown-option ${option === selected ? "selected" : ""}`}
+                          onClick={() => {
+                            setSelected(option);
+                            setIsOpen(false);
+                            // add your sorting logic here
+                          }}
+                        >
+                          {option}
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 <div className="filter-group">
                   <span className="filter-label">Search</span>
-                  <Input placeholder="Search Trades by Symbol..." className="search-input" />
+                  <Input
+                    placeholder="Search Trades by Symbol..."
+                    className="search-input"
+                  />
                 </div>
               </div>
 
@@ -158,11 +220,15 @@ export default function ChartMazeInterface() {
                 <div className="advanced-metrics">
                   <div className="metric-card">
                     <div className="metric-label">P/L</div>
-                    <div className="metric-value success">10.00% (5000.00₹)</div>
+                    <div className="metric-value success">
+                      10.00% (5000.00₹)
+                    </div>
                   </div>
 
                   <div className="metric-card">
-                    <div className="metric-label">PORTFOLIO P/L (CURRENT BALANCE)</div>
+                    <div className="metric-label">
+                      PORTFOLIO P/L (CURRENT BALANCE)
+                    </div>
                     <div className="metric-value">
                       <span className="success">5555.56 % | </span>
                       <span>₹5009.00</span>
@@ -189,63 +255,67 @@ export default function ChartMazeInterface() {
               </div>
 
               {/* Charts */}
-              <div className="grid grid-cols-2 gap-6 mb-6">
-                <div className="border rounded-lg overflow-hidden">
-                  <div className="p-3 border-b">
-                    <h3 className="text-sm font-medium">Entry Chart</h3>
+              <div className="chart-grid">
+                <div className="chart-card">
+                  <div className="card-header">
+                    <h3 className="card-title">Entry Chart</h3>
                   </div>
                   <StockChart />
-                  <div className="p-3 border-t">
-                    <div className="text-xs text-gray-500 mb-2">ENTRY DATES</div>
-                    <div className="text-sm">Buy 100 @ 500 (26-04-2025 22:24)</div>
+                  <div className="card-footer">
+                    <div className="section-label">ENTRY DATES</div>
+                    <div className="section-text">
+                      Buy 100 @ 500 (26-04-2025 22:24)
+                    </div>
 
-                    <div className="mt-4">
-                      <div className="text-xs text-gray-500 mb-2">SITUATIONAL AWARENESS</div>
-                      <div className="relative">
-                        <button className="w-full text-left border rounded p-2 text-sm flex justify-between items-center">
+                    <div className="section-block">
+                      <div className="section-label">SITUATIONAL AWARENESS</div>
+                      <div className="dropdown-wrapper">
+                        <button className="dropdown-button">
                           <span>No rules selected</span>
-                          <ChevronDown className="h-4 w-4" />
+                          <ChevronDown className="icon" />
                         </button>
                       </div>
                     </div>
 
-                    <div className="mt-4">
-                      <div className="text-xs text-gray-500 mb-2">ENTRY TRIGGER</div>
-                      <div className="relative">
-                        <button className="w-full text-left border rounded p-2 text-sm flex justify-between items-center">
+                    <div className="section-block">
+                      <div className="section-label">ENTRY TRIGGER</div>
+                      <div className="dropdown-wrapper">
+                        <button className="dropdown-button">
                           <span>No rules selected</span>
-                          <ChevronDown className="h-4 w-4" />
+                          <ChevronDown className="icon" />
                         </button>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <div className="border rounded-lg overflow-hidden">
-                  <div className="p-3 border-b">
-                    <h3 className="text-sm font-medium">Exit Chart</h3>
+                <div className="chart-card">
+                  <div className="card-header">
+                    <h3 className="card-title">Exit Chart</h3>
                   </div>
                   <StockChart />
-                  <div className="p-3 border-t">
-                    <div className="text-xs text-gray-500 mb-2">EXIT DATES</div>
-                    <div className="text-sm">Sell 100 @ 550 (26-04-2025 22:24)</div>
+                  <div className="card-footer">
+                    <div className="section-label">EXIT DATES</div>
+                    <div className="section-text">
+                      Sell 100 @ 550 (26-04-2025 22:24)
+                    </div>
 
-                    <div className="mt-4">
-                      <div className="text-xs text-gray-500 mb-2">RISK MANAGEMENT</div>
-                      <div className="relative">
-                        <button className="w-full text-left border rounded p-2 text-sm flex justify-between items-center">
+                    <div className="section-block">
+                      <div className="section-label">RISK MANAGEMENT</div>
+                      <div className="dropdown-wrapper">
+                        <button className="dropdown-button">
                           <span>No rules selected</span>
-                          <ChevronDown className="h-4 w-4" />
+                          <ChevronDown className="icon" />
                         </button>
                       </div>
                     </div>
 
-                    <div className="mt-4">
-                      <div className="text-xs text-gray-500 mb-2">EXIT TRIGGER</div>
-                      <div className="relative">
-                        <button className="w-full text-left border rounded p-2 text-sm flex justify-between items-center">
+                    <div className="section-block">
+                      <div className="section-label">EXIT TRIGGER</div>
+                      <div className="dropdown-wrapper">
+                        <button className="dropdown-button">
                           <span>No rules selected</span>
-                          <ChevronDown className="h-4 w-4" />
+                          <ChevronDown className="icon" />
                         </button>
                       </div>
                     </div>
@@ -255,15 +325,16 @@ export default function ChartMazeInterface() {
 
               {/* Additional Notes */}
               <div className="notes-section">
-                <div className="section-label">ADDITIONAL NOTES</div>
+                <div className="section-label">
+                  <Input placeholder="Add Notes..." className="notes-input" />
+                </div>
               </div>
             </>
           ) : (
-            /* Summary View - Now using the new SummaryView component */
             <SummaryView />
           )}
         </div>
       </div>
     </div>
-  )
+  );
 }
