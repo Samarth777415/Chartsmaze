@@ -585,12 +585,12 @@
 }
 
 .dropdown-option:hover {
-  background-color: #f3f4f6;  /* hover:bg-gray-100 */
+  background-color: #f3f4f6;  
 }
 
 .dropdown-option.selected {
-  background-color: #f3f4f6;  /* bg-gray-100 */
-  font-weight: 600;           /* font-semibold */
+  background-color: #f3f4f6;  
+  font-weight: 600;          
 }
 
 .riskBar {
@@ -683,6 +683,67 @@
   width: 1rem;
   height: 1rem;
 }
+.load-container {
+  margin-right: 0;
+  width: 200px;
+  position: relative;
+  font-family: Arial, sans-serif;
+}
+
+.load-label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.symbol-selector {
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+}
+
+.dropdown-arrow {
+  margin-left: 10px;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 55px;
+  left: 0;
+  width: 100%;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  z-index: 1000;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-item {
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background-color: #eee;
+}
+
+.expand-button {
+  margin-top: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.expand-icon {
+  display: inline-block;
+}
+
 
 /* Responsive styling */
 @media (max-width: 1024px) {
@@ -765,7 +826,5 @@
     align-items: center;
   }
   
-  .symbol-selector {
-    margin-top: 0.5rem;
-  }
+  
 }

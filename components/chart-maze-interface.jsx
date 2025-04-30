@@ -18,7 +18,16 @@ export default function ChartMazeInterface() {
   const [selected, setSelected] = useState("Date (Newest First)");
   const [isOpen1, setIsOpen1] = useState(false);
   const [selectedSymbol, setSelectedSymbol] = useState("ADSA");
-  const symbols = ["ADSA", "BDTC", "CXYZ"];
+  const symbols = ["ADSA", "BDMS", "CTRA", "DXPL"];
+
+  const toggleDropdown = () => {
+    setIsOpen1(!isOpen);
+  };
+
+  const handleSelect = (symbol) => {
+    setSelectedSymbol(symbol);
+    setIsOpen1(false);
+  };
 
   const options = [
     "Date (Newest First)",
@@ -100,19 +109,31 @@ export default function ChartMazeInterface() {
             </div>
 
             {/* Load container on the right */}
+            <div className="load-container">
+      <span className="load-label">Load:</span>
+      <div className="symbol-selector" onClick={toggleDropdown}>
+        <span>{selectedSymbol}</span>
+        <span className="dropdown-arrow">▼</span>
+      </div>
+
+      {isOpen1 && (
+        <div className="dropdown-menu">
+          {symbols.map((symbol) => (
             <div
-              className="load-container"
-              style={{ marginRight: "0", width: "200px" }}
+              key={symbol}
+              onClick={() => handleSelect(symbol)}
+              className="dropdown-item"
             >
-              <span className="load-label">Load:</span>
-              <div className="symbol-selector">
-                <span>ADSA</span>
-                <span className="dropdown-arrow">▼</span>
-              </div>
-              <button className="expand-button">
-                <span className="expand-icon">⤢</span>
-              </button>
+              {symbol}
             </div>
+          ))}
+        </div>
+      )}
+
+      <button className="expand-button">
+        <span className="expand-icon">⤢</span>
+      </button>
+    </div>
           </div>
 
           {/* Conditionally render content based on active tab */}
