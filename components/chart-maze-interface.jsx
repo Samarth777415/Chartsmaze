@@ -8,6 +8,7 @@ import Sidebar from "./sidebar";
 import StockChart from "./stock-chart";
 import SummaryView from "./summary-view";
 import "./ChartMazeInterface.css";
+import { useEffect } from "react";
 
 export default function ChartMazeInterface() {
   const [dateRange, setDateRange] = useState("26/04/2025 - 26/04/2025");
@@ -19,6 +20,8 @@ export default function ChartMazeInterface() {
   const [isOpen1, setIsOpen1] = useState(false);
   const [selectedSymbol, setSelectedSymbol] = useState("ADSA");
   const symbols = ["ADSA", "BDMS", "CTRA", "DXPL"];
+  
+  const [isMobile, setIsMobile] = useState(false); // State to track mobile screen size
 
   const toggleDropdown = () => {
     setIsOpen1(!isOpen);
@@ -45,18 +48,29 @@ export default function ChartMazeInterface() {
   const toggleSidebar = () => {
     setSidebarVisible(!sidebarVisible);
   };
+  useEffect(() => {
+    const checkMobileScreen = () => {
+      setIsMobile(window.innerWidth <= 768); // Adjust the breakpoint as needed
+    };
 
+    window.addEventListener("resize", checkMobileScreen);
+    checkMobileScreen(); // Check on initial load
+
+    return () => {
+      window.removeEventListener("resize", checkMobileScreen);
+    };
+  }, []);
   return (
     <div className="chart-maze-container">
       {/* Conditionally render sidebar based on visibility state */}
       <div
-        className={`sidebar-container ${sidebarVisible ? "sidebar-visible" : "sidebar-hidden"}`}
+        className={`sidebar-container ${sidebarVisible && !isMobile ? "sidebar-visible" : "sidebar-hidden"}`}
       >
         <Sidebar />
       </div>
 
       <div
-        className={`main-content ${sidebarVisible ? "" : "main-content-expanded"}`}
+        className={`main-content ${sidebarVisible && !isMobile ? "" : "main-content-expanded"}`}
       >
         <header className="top-nav">
           <Button

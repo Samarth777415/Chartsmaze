@@ -784,7 +784,6 @@
     grid-template-columns: 1fr;
   }
 }
-/* Add these styles to your ChartMazeInterface.css file */
 
 /* Make the toggle container responsive */
 @media (max-width: 768px) {
